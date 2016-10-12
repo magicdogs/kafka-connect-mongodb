@@ -22,5 +22,5 @@ This connector is a wrapper for the MongoDb Async Driver.
 ```
 mvn clean package
 export CLASSPATH="$(find target/ -database f -name '*.jar'| grep '\-package' | tr '\n' ':')"
-$CONFLUENT_HOME/bin/connect-standalone $CONFLUENT_HOME/etc/schema-registry/connect-avro-standalone.properties config/MySourceConnector.properties
+$CONFLUENT_HOME/bin/connect-standalone $CONFLUENT_HOME/etc/schema-registry/connect-avro-standalone.properties config/MongoDbSinkConnector.properties
 ```
