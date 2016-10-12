@@ -1,5 +1,6 @@
 package io.confluent.kafka.connect.mongodb.type;
 
+import com.google.common.collect.ImmutableMap;
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.SchemaBuilder;
 import org.apache.kafka.connect.data.Struct;
@@ -12,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -62,6 +64,9 @@ public class ConverterTest {
     testData.put("int64", new AbstractMap.SimpleEntry<>(Schema.INT64_SCHEMA, (Object) new Long("12")));
     testData.put("float32", new AbstractMap.SimpleEntry<>(Schema.FLOAT32_SCHEMA, (Object) new Float("12")));
     testData.put("float64", new AbstractMap.SimpleEntry<>(Schema.FLOAT64_SCHEMA, (Object) new Double("12")));
+
+    testData.put("array", new AbstractMap.SimpleEntry<>(SchemaBuilder.array(Schema.STRING_SCHEMA).build(), (Object) Arrays.asList("foo", "bar", "baz")));
+    testData.put("map", new AbstractMap.SimpleEntry<>(SchemaBuilder.map(Schema.STRING_SCHEMA, Schema.STRING_SCHEMA).build(), (Object) ImmutableMap.of("foo", "bar")));
 
     testData.put("string", new AbstractMap.SimpleEntry<>(Schema.STRING_SCHEMA, (Object) "Testing"));
 

@@ -6,5 +6,5 @@ import org.bson.BsonValue;
 public interface TypeConverter {
   Schema schema();
 
-  BsonValue bsonValue(Object input);
+  BsonValue bsonValue(Converter converter, Schema schema, Object input);
 }

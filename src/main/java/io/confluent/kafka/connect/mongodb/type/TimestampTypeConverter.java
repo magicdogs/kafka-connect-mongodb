@@ -14,7 +14,7 @@ class TimestampTypeConverter implements TypeConverter {
   }
 
   @Override
-  public BsonValue bsonValue(Object input) {
+  public BsonValue bsonValue(Converter converter, Schema schema, Object input) {
     long longValue = ((Date) input).getTime();
     return new BsonDateTime(longValue);
   }

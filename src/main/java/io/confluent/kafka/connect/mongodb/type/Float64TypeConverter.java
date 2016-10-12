@@ -11,7 +11,7 @@ class Float64TypeConverter implements TypeConverter {
   }
 
   @Override
-  public BsonValue bsonValue(Object input) {
+  public BsonValue bsonValue(Converter converter, Schema schema, Object input) {
     Double floatValue = (Double) input;
     return new BsonDouble(floatValue);
   }

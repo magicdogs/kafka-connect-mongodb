@@ -11,7 +11,7 @@ class Float32TypeConverter implements TypeConverter {
   }
 
   @Override
-  public BsonValue bsonValue(Object input) {
+  public BsonValue bsonValue(Converter converter, Schema schema, Object input) {
     Float floatValue = (Float) input;
     return new BsonDouble(floatValue.doubleValue());
   }

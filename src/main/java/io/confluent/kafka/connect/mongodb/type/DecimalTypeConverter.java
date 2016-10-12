@@ -16,7 +16,7 @@ class DecimalTypeConverter implements TypeConverter {
   }
 
   @Override
-  public BsonValue bsonValue(Object input) {
+  public BsonValue bsonValue(Converter converter, Schema schema, Object input) {
     BigDecimal decimal = (BigDecimal) input;
     BsonDocument bsonDocument = new BsonDocument();
     bsonDocument.put("unscaled", new BsonInt64(decimal.unscaledValue().longValue()));

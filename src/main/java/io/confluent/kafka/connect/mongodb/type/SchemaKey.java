@@ -26,8 +26,8 @@ class SchemaKey implements Comparable<SchemaKey> {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-        .add("database", this.type)
-        .add("collection", this.logicalName)
+        .add("type", this.type)
+        .add("logicalName", this.logicalName)
         .toString();
   }
 

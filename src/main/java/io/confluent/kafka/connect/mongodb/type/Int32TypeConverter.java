@@ -11,7 +11,7 @@ class Int32TypeConverter implements TypeConverter {
   }
 
   @Override
-  public BsonValue bsonValue(Object input) {
+  public BsonValue bsonValue(Converter converter, Schema schema, Object input) {
     int intValue = (int) input;
     return new BsonInt32(intValue);
   }

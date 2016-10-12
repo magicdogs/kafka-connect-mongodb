@@ -11,7 +11,7 @@ class Int64TypeConverter implements TypeConverter {
   }
 
   @Override
-  public BsonValue bsonValue(Object input) {
+  public BsonValue bsonValue(Converter converter, Schema schema, Object input) {
     long longValue = (long) input;
     return new BsonInt64(longValue);
   }

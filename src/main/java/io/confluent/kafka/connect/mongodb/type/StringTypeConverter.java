@@ -11,7 +11,7 @@ class StringTypeConverter implements TypeConverter {
   }
 
   @Override
-  public BsonValue bsonValue(Object input) {
+  public BsonValue bsonValue(Converter converter, Schema schema, Object input) {
     String stringValue = (String) input;
     return new BsonString(stringValue);
   }

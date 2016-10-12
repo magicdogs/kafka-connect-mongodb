@@ -28,6 +28,8 @@ public class Converter {
     registerTypeConverter(new DecimalTypeConverter());
     registerTypeConverter(new Float32TypeConverter());
     registerTypeConverter(new Float64TypeConverter());
+    registerTypeConverter(new ArrayTypeConverter());
+    registerTypeConverter(new MapTypeConverter());
   }
 
   public final void registerTypeConverter(TypeConverter typeConverter) {
@@ -51,8 +53,15 @@ public class Converter {
 
     SchemaKey schemaKey = new SchemaKey(schema);
     TypeConverter typeConverter = this.converterLookup.get(schemaKey);
-    Preconditions.checkNotNull(typeConverter, "Could not find TypeConverter for {}", typeConverter);
-    return typeConverter.bsonValue(value);
+    if (null == typeConverter) {
+      throw new UnsupportedOperationException(
+          String.format(
+              "Could not find TypeConverter for %s",
+              schemaKey
+          )
+      );
+    }
+    return typeConverter.bsonValue(this, schema, value);
   }
 
   private BsonDocument document(Schema schema, Object value) {

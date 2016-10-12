@@ -12,7 +12,7 @@ class Int8TypeConverter implements TypeConverter {
   }
 
   @Override
-  public BsonValue bsonValue(Object input) {
+  public BsonValue bsonValue(Converter converter, Schema schema, Object input) {
     Byte byteValue = (Byte) input;
     int intValue = byteValue.intValue();
     return new BsonInt32(intValue);
