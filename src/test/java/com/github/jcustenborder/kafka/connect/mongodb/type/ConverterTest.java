@@ -29,16 +29,21 @@ import org.bson.BsonInt64;
 import org.bson.BsonValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
 public class ConverterTest {
@@ -49,31 +54,27 @@ public class ConverterTest {
     this.converter = new Converter();
   }
 
-  void assertBsonValue(final Object input, final BsonValue expected, final Schema schema) {
-    final BsonValue actual = this.converter.bsonValue(schema, input);
+
+  static TestCase of(Object input, Object expected, Schema schema) {
+    return new TestCase(input, expected, schema);
+  }
+
+  @TestFactory
+  public Stream<DynamicTest> bsonValue() {
+    List<TestCase> tests = Arrays.asList(
+        of(new Long("12"), new BsonInt64(12), Schema.INT64_SCHEMA),
+        of(new Byte("12"), new BsonInt32(12), Schema.INT8_SCHEMA),
+        of(new Short("12"), new BsonInt32(12), Schema.INT16_SCHEMA),
+        of(new Integer("12"), new BsonInt32(12), Schema.INT32_SCHEMA)
+    );
+
+    return tests.stream().map(testCase -> dynamicTest(testCase.toString(), () -> bsonValue(testCase)));
+  }
+
+  void bsonValue(TestCase testCase) {
+    final BsonValue actual = this.converter.bsonValue(testCase.schema, testCase.input);
     assertNotNull(actual, "actual should not be null.");
-    assertEquals(expected, actual);
-  }
-
-
-  @Test
-  public void bsonValue_int8() {
-    assertBsonValue(new Byte("12"), new BsonInt32(12), Schema.INT8_SCHEMA);
-  }
-
-  @Test
-  public void bsonValue_int16() {
-    assertBsonValue(new Short("12"), new BsonInt32(12), Schema.INT16_SCHEMA);
-  }
-
-  @Test
-  public void bsonValue_int32() {
-    assertBsonValue(new Integer("12"), new BsonInt32(12), Schema.INT32_SCHEMA);
-  }
-
-  @Test
-  public void bsonValue_int64() {
-    assertBsonValue(new Long("12"), new BsonInt64(12), Schema.INT64_SCHEMA);
+    assertEquals(testCase.expected, actual);
   }
 
   @Disabled
@@ -131,4 +132,21 @@ public class ConverterTest {
 
   }
 
+  static class TestCase {
+    final Object input;
+    final Object expected;
+    final Schema schema;
+
+
+    TestCase(Object input, Object expected, Schema schema) {
+      this.input = input;
+      this.expected = expected;
+      this.schema = schema;
+    }
+
+    @Override
+    public String toString() {
+      return String.format("%s", this.expected.getClass().getSimpleName());
+    }
+  }
 }
