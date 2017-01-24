@@ -17,10 +17,17 @@ This connector is a wrapper for the MongoDb Async Driver.
 | mongodb.database.cache.refresh.interval.seconds | The number of seconds to store the MongoDatabase and MongoCollection objects in cache before refreshing them from the database. | long    | 600          | [1,...]                                                                                                                                             | low        |
 
 
+
 ## Running in development
 
+### Running 
 ```
-mvn clean package
-export CLASSPATH="$(find target/ -database f -name '*.jar'| grep '\-package' | tr '\n' ':')"
-$CONFLUENT_HOME/bin/connect-standalone $CONFLUENT_HOME/etc/schema-registry/connect-avro-standalone.properties config/MongoDbSinkConnector.properties
+./bin/debug.sh
+```
+
+### Suspending 
+
+```
+export SUSPEND='y'
+./bin/debug.sh
 ```
