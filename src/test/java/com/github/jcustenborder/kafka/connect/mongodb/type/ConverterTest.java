@@ -28,6 +28,7 @@ import org.bson.BsonInt32;
 import org.bson.BsonInt64;
 import org.bson.BsonValue;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.AbstractMap;
@@ -75,6 +76,7 @@ public class ConverterTest {
     assertBsonValue(new Long("12"), new BsonInt64(12), Schema.INT64_SCHEMA);
   }
 
+  @Disabled
   @Test
   public void bsonDocument() {
     Map<String, Map.Entry<Schema, Object>> testData = new LinkedHashMap<>();
